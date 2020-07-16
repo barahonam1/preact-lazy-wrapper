@@ -30,7 +30,6 @@ const Lazy = ({children, fallback}) => {
   useEffect(() => {
     return () => {
       if(timerRef.current) {
-        console.log('are u fucking')
         timerRef.current.forEach(timer => {
           clearTimeout(timer)
         })

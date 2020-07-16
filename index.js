@@ -12,6 +12,12 @@ const Lazy = ({children, fallback}) => {
     }, 1000))
   }, [])
 
+  const handleState = useCallback(e => {
+    if (e.target.readyState === 'complete') {
+      releaseComponent()
+    }
+  }, [releaseComponent])
+
   useEffect(() => {
 
     if(document.readyState === 'complete') {
@@ -19,10 +25,10 @@ const Lazy = ({children, fallback}) => {
       return
     }
 
-    window.addEventListener('load', releaseComponent())
+    document.addEventListener('readystatechange', handleState)
 
     return () => {
-      window.removeEventListener('load', releaseComponent())
+      document.removeEventListener('readystatechange', handleState)
     }
 
   }, [releaseComponent])
